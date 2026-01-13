@@ -6,7 +6,8 @@ public class WithdrawalService {
                          Account account,
                          double sum,
                          String currency) {
-        if (!account.getCurrency().equals(currency)) {
+        Balance balance = account.getBalance();
+        if (!balance.getCurrency().equals(currency)) {
             throw new RuntimeException("Can't extract withdraw " + currency);
         }
         double overdraftFee = customer.overdraftFee(sum);
@@ -14,11 +15,11 @@ public class WithdrawalService {
     }
 
     private void applyWithdrawal(Account account, double sum, double discount) {
-        Money money = account.getMoney();
-        if (money.isNegative()) {
-            money.subtract(sum + discount);
+        Balance balance = account.getBalance();
+        if (balance.isNegative()) {
+            balance.subtract(sum + discount);
         } else {
-            money.subtract(sum);
+            balance.subtract(sum);
         }
     }
 }
