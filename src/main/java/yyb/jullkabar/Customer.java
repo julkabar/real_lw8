@@ -35,21 +35,12 @@ public class Customer {
             switch (customerType) {
                 case COMPANY:
                     // we are in overdraft
-                    if (account.getMoney() < 0) {
-                        // 50 percent discount for overdraft for premium account
-                        account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee() * companyOverdraftDiscount / 2);
-                    } else {
-                        account.setMoney(account.getMoney() - sum);
-                    }
+                    withdrawAmount(sum, sum * account.overdraftFee() * companyOverdraftDiscount / 2);
                     break;
                 case PERSON:
 
                     // we are in overdraft
-                    if (account.getMoney() < 0) {
-                        account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee());
-                    } else {
-                        account.setMoney(account.getMoney() - sum);
-                    }
+                    withdrawAmount(sum, sum * account.overdraftFee());
                     break;
             }
 
@@ -58,22 +49,21 @@ public class Customer {
             switch (customerType) {
                 case COMPANY:
                     // we are in overdraft
-                    if (account.getMoney() < 0) {
-                        // no discount for overdraft for not premium account
-                        account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee() * companyOverdraftDiscount);
-                    } else {
-                        account.setMoney(account.getMoney() - sum);
-                    }
+                    withdrawAmount(sum, sum * account.overdraftFee() * companyOverdraftDiscount);
                     break;
                 case PERSON:
                     // we are in overdraft
-                    if (account.getMoney() < 0) {
-                        account.setMoney((account.getMoney() - sum) - sum * account.overdraftFee());
-                    } else {
-                        account.setMoney(account.getMoney() - sum);
-                    }
+                    withdrawAmount(sum, sum * account.overdraftFee());
                     break;
             }
+        }
+    }
+
+    private void withdrawAmount(double sum, double discount) {
+        if (account.getMoney() < 0) {
+            account.setMoney((account.getMoney() - sum) - discount);
+        } else {
+            account.setMoney(account.getMoney() - sum);
         }
     }
 
