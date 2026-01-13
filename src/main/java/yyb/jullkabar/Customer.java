@@ -46,10 +46,12 @@ public abstract class Customer {
         this.email = email;
     }
 
+    public String printCustomer() {
+        return name + " " + email;
+    }
+
     public String printCustomerDaysOverdrawn() {
-        String fullName = name + " " + surname + " ";
-        String accountDescription = "Account: IBAN: " + account.getIban() + ", Days Overdrawn: " + account.getDaysOverdrawn();
-        return fullName + accountDescription;
+        return name + " " + surname + " " + account.printDaysOverdrawn();
     }
 
     public String printCustomerMoney() {

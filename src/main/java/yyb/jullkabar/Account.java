@@ -15,7 +15,6 @@ public class Account {
         this.daysOverdrawn = daysOverdrawn;
     }
 
-
     public double bankcharge() {
         double result = 4.5;
         result += overdraftCharge();
@@ -43,6 +42,11 @@ public class Account {
     public String printAccountInfo() {
         return "Account: IBAN: " + iban + ", Money: " + money
                 + ", Account type: " + type;
+    }
+
+    public String printDaysOverdrawn() {
+        return "Account: IBAN: " + iban
+                + ", Days Overdrawn: " + daysOverdrawn;
     }
 
     public int getDaysOverdrawn() {
@@ -73,16 +77,9 @@ public class Account {
         this.customer = customer;
     }
 
-
     public AccountType getType() {
         return type;
     }
-
-
-    public String printCustomer() {
-        return customer.getName() + " " + customer.getEmail();
-    }
-
 
     public String getCurrency() {
         return currency;
