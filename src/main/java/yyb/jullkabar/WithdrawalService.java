@@ -14,10 +14,11 @@ public class WithdrawalService {
     }
 
     private void applyWithdrawal(Account account, double sum, double discount) {
-        if (account.getMoney() < 0) {
-            account.setMoney((account.getMoney() - sum) - discount);
+        Money money = account.getMoney();
+        if (money.isNegative()) {
+            money.subtract(sum + discount);
         } else {
-            account.setMoney(account.getMoney() - sum);
+            money.subtract(sum);
         }
     }
 }

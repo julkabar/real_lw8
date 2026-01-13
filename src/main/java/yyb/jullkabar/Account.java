@@ -5,7 +5,7 @@ public class Account {
     private String iban;
     private AccountType type;
     private int daysOverdrawn;
-    private double money;
+    private Money money;;
     private String currency;
     private Customer customer;
 
@@ -40,7 +40,7 @@ public class Account {
     }
 
     public String printAccountInfo() {
-        return "Account: IBAN: " + iban + ", Money: " + money
+        return "Account: IBAN: " + iban + ", Money: " + money.getAmount()
                 + ", Account type: " + type;
     }
 
@@ -61,11 +61,11 @@ public class Account {
         this.iban = iban;
     }
 
-    public void setMoney(double money) {
-        this.money = money;
+    public void setMoney(double amount) {
+        this.money = new Money(amount);
     }
 
-    public double getMoney() {
+    public Money getMoney() {
         return money;
     }
 
