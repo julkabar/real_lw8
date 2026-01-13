@@ -28,37 +28,14 @@ public class Customer {
     }
 
     public void withdraw(double sum, String currency) {
-        if (!account.getCurrency().equals(currency)) {
-            throw new RuntimeException("Can't extract withdraw " + currency);
-        }
-        double discount = calculateDiscount(sum);
-        withdrawAmount(sum, discount);
-    }
-
-    private double calculateDiscount(double sum) {
-        if (account.getType().isPremium()) {
-            return switch (customerType) {
-                case COMPANY ->
-                        sum * account.overdraftFee() * companyOverdraftDiscount / 2;
-                case PERSON ->
-                        sum * account.overdraftFee();
-            };
-        } else {
-            return switch (customerType) {
-                case COMPANY ->
-                        sum * account.overdraftFee() * companyOverdraftDiscount;
-                case PERSON ->
-                        sum * account.overdraftFee();
-            };
-        }
-    }
-
-    private void withdrawAmount(double sum, double discount) {
-        if (account.getMoney() < 0) {
-            account.setMoney((account.getMoney() - sum) - discount);
-        } else {
-            account.setMoney(account.getMoney() - sum);
-        }
+        WithdrawalService service = new WithdrawalService();
+        service.withdraw(
+                this,
+                account,
+                sum,
+                currency,
+                companyOverdraftDiscount
+        );
     }
 
     public String getName() {
