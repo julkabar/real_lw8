@@ -6,18 +6,18 @@ public class WithdrawalService {
                          Account account,
                          double sum,
                          String currency,
-                         double companyOverdraftDiscount) {
+                         double companyOverdraftOverdraftFee) {
         if (!account.getCurrency().equals(currency)) {
             throw new RuntimeException("Can't extract withdraw " + currency);
         }
-        double discount = calculateDiscount(customer.getCustomerType(),
+        double overdraftFee = calculateOverdraftFee(customer.getCustomerType(),
                 account,
                 sum,
-                companyOverdraftDiscount);
-        withdrawAmount(account, sum, discount);
+                companyOverdraftOverdraftFee);
+        applyWithdrawal(account, sum, overdraftFee);
     }
 
-    private double calculateDiscount(CustomerType customerType, Account account,
+    private double calculateOverdraftFee(CustomerType customerType, Account account,
                                      double sum, double companyOverdraftDiscount) {
         if (account.getType().isPremium()) {
             return switch (customerType) {
@@ -36,7 +36,7 @@ public class WithdrawalService {
         }
     }
 
-    private void withdrawAmount(Account account, double sum, double discount) {
+    private void applyWithdrawal(Account account, double sum, double discount) {
         if (account.getMoney() < 0) {
             account.setMoney((account.getMoney() - sum) - discount);
         } else {
