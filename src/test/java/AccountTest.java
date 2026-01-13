@@ -1,8 +1,7 @@
 import org.junit.Test;
 import yyb.jullkabar.Account;
-import yyb.jullkabar.AccountType;
 import yyb.jullkabar.Customer;
-import yyb.jullkabar.CustomerType;
+import yyb.jullkabar.PersonCustomer;
 
 import static org.hamcrest.MatcherAssert.assertThat;
 import static org.hamcrest.Matchers.is;
@@ -36,18 +35,15 @@ public class AccountTest {
     @Test
     public void testPrintCustomer() {
         Account account = getNormalAccount();
-        Customer customer = new Customer("xxx", "xxx", "xxx@mail.com", CustomerType.PERSON, account);
-        account.setCustomer(customer);
-        assertThat(account.printCustomer(), is("xxx xxx@mail.com"));
+        Customer customer = new PersonCustomer("xxx", "xxx", "xxx@mail.com", account);
+        assertThat(customer.printCustomer(), is("xxx xxx@mail.com"));
     }
 
     private Account getNormalAccount() {
-        AccountType premium = new AccountType(false);
-        return new Account(premium, 9);
+        return new Account(false, 9);
     }
 
     private Account getPremiumAccount(int daysOverdrawn) {
-        AccountType normal = new AccountType(true);
-        return new Account(normal, daysOverdrawn);
+        return new Account(true, daysOverdrawn);
     }
 }

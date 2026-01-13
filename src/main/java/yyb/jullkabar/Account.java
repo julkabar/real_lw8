@@ -39,7 +39,7 @@ public class Account {
     }
 
     public String printAccountInfo() {
-        return "Account: IBAN: " + iban + ", , Balance: " + balance.toString()
+        return "Account: IBAN: " + iban + ", Money: " + balance.toString()
                 + ", Account type: " + getAccountType();
     }
 
