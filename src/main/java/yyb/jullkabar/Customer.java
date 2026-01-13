@@ -1,31 +1,20 @@
 package yyb.jullkabar;
 
-public class Customer {
+public abstract class Customer {
 
-    private String name;
-    private String surname;
-    private String email;
-    private CustomerType customerType;
-    private Account account;
-    private double companyOverdraftDiscount = 1;
+    protected String name;
+    protected String surname;
+    protected String email;
+    protected Account account;
 
-
-    public Customer(String name, String surname, String email, CustomerType customerType, Account account) {
+    public Customer(String name, String surname, String email, Account account) {
         this.name = name;
         this.surname = surname;
         this.email = email;
-        this.customerType = customerType;
         this.account = account;
     }
 
-    // use only to create companies
-    public Customer(String name, String email, Account account, double companyOverdraftDiscount) {
-        this.name = name;
-        this.email = email;
-        this.customerType = CustomerType.COMPANY;
-        this.account = account;
-        this.companyOverdraftDiscount = companyOverdraftDiscount;
-    }
+    public abstract double overdraftFee(double sum);
 
     public void withdraw(double sum, String currency) {
         WithdrawalService service = new WithdrawalService();
@@ -33,9 +22,12 @@ public class Customer {
                 this,
                 account,
                 sum,
-                currency,
-                companyOverdraftDiscount
+                currency
         );
+    }
+
+    public Account getAccount() {
+        return account;
     }
 
     public String getName() {
@@ -52,14 +44,6 @@ public class Customer {
 
     public void setEmail(String email) {
         this.email = email;
-    }
-
-    public CustomerType getCustomerType() {
-        return customerType;
-    }
-
-    public void setCustomerType(CustomerType customerType) {
-        this.customerType = customerType;
     }
 
     public String printCustomerDaysOverdrawn() {
