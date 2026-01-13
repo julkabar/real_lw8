@@ -12,7 +12,7 @@ public class CompanyCustomer extends Customer {
 
     @Override
     public double overdraftFee(double sum) {
-        if (account.getType().isPremium()) {
+        if (account.isPremium()) {
             return sum * account.overdraftFee() * companyOverdraftDiscount / 2;
         }
         return sum * account.overdraftFee() * companyOverdraftDiscount;
